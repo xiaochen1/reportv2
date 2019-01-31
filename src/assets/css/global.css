@@ -1,0 +1,67 @@
+/*! global use  class*/
+
+html,
+body,
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.clearfix:after {
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+    visibility: hidden;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexauto,
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.flex-4 {
+    flex: 4;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-hcenter-lr {
+    justify-content: space-between;
+}
+
+.split {
+    height: 1px;
+    background: #ddd;
+}
+
+
+/* 覆盖normalize.css 原生样式 */
+
+input {
+    padding: 0;
+}

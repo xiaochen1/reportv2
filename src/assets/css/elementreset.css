@@ -1,0 +1,33 @@
+.mix-input-h32 .el-input__inner,
+.mix-input-h32.el-input__inner,
+.mix-select-h32 .el-input__inner {
+    height: 32px;
+}
+
+.mix-input .el-input__inner,
+.mix-input.el-input__inner {
+    border-radius: 2px;
+    border: solid 1px #dddddd;
+    font-family: MicrosoftYaHei;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    letter-spacing: 0px;
+}
+
+.el-table.mix-table th {
+    background: #ececec;
+}
+
+.el-table.mix-table th:not(:last-child) {
+    border-right: 1px solid #fff;
+}
+
+.el-dialog__header {
+    text-align: left;
+    background-color: #191f28;
+}
+
+.el-dialog__header .el-dialog__title {
+    color: #eee;
+}
