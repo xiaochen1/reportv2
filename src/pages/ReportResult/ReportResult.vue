@@ -15,8 +15,9 @@
                 <div class="search-tool fl">
                   <div class="search-input">
                     <el-input v-model="searchCondition.searchInput" class="mix-input mix-input-h32" placeholder="请输入搜索内容" @keyup.enter.native="toSearch"></el-input>
+                    <span class="searchbtn icon-search" @click="toSearch"></span>
                   </div>
-                  <div class="searchbtn icon-refresh fl" @click="toRefresh"></div>
+                  <div class="refresh icon-refresh fl" @click="toRefresh"></div>
                 </div>
 
                 <div class="tools fr ">
@@ -33,17 +34,17 @@
                     <div class="data-main flexauto flex-column">
                       <el-table :data="sheetList" class="mix-table" height="100%" style="width: 100%"   >
 
-                        <el-table-column label="project_id" prop="output_id" width="120">
+                        <el-table-column label="output_id" prop="output_id" width="120">
                         </el-table-column>
 
-                        <el-table-column label="project_name" prop="output_name">
+                        <el-table-column label="output_name" prop="output_name">
                         </el-table-column>
 
                         <el-table-column label="description" prop="description">
                         </el-table-column>
 
 
-                        <el-table-column label="scheduled" prop="project_id">
+                        <el-table-column label="project_id" prop="project_id">
                         </el-table-column>
 
                         <el-table-column label="file" prop="file">
@@ -178,12 +179,14 @@
 
       handleRowClickDelete: function (row) {
         console.log("点击删除");
+        let self = this;
         ReportResultApi.current.deleteReport(function (res) {
           if (res.code == 200) {
             self.$message({
               type: "success",
               message: res.msg
             });
+            self.$router.go(0);
           }
         }, {
           output_id: row.output_id
@@ -221,5 +224,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/sass/pages/StaResult/StaResult.scss";
+  @import "@/assets/sass/pages/ReportResult/ReportResult.scss";
 </style>

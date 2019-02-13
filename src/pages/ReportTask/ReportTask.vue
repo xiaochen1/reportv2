@@ -5,7 +5,7 @@
         <div class="box-main flexauto flex-column">
           <div class="box-top">
             <div class="title">
-              <span>统计项目</span>
+              <span>报表项目</span>
             </div>
             <div class="split"></div>
           </div>
@@ -15,8 +15,9 @@
                 <div class="search-tool fl">
                   <div class="search-input">
                     <el-input v-model="searchCondition.searchInput" class="mix-input mix-input-h32" placeholder="请输入搜索内容" @keyup.enter.native="toSearch"></el-input>
+                    <span class="searchbtn icon-search" @click="toSearch"></span>
                   </div>
-                  <div class="searchbtn icon-refresh fl" @click="toRefresh"></div>
+                  <div class="refresh icon-refresh fl" @click="toRefresh"></div>
                 </div>
 
                 <div class="tools fr ">
@@ -344,13 +345,15 @@
                   <el-upload class="upload-demo" drag action="" 
                   ref="ref_editTplFile" 
                   multiple
+                  :file-list="editTplFileList"
                   :limit="1" 
                   :http-request="handleEditTplFileUpload" 
                   @on-exceed="handleEditTplFileExceed"
+                  @before-upload="handleEditTplFileBeforeUpload"
                   @change="handleEditTplChange">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                    <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                    <div class="el-upload__tip" slot="tip">只能上传excel文件</div>
                   </el-upload>
 
                 </div>
@@ -399,7 +402,8 @@
         editSheetObj: {},
         editUserList: [],
         editCustomerList: [],
-        editTmpFile: {},
+        editTplFileList: [],
+        editTmpFile: "",
 
 
         searchCondition: {
@@ -506,6 +510,8 @@
             self.editSheetObj = res.result;
 
 
+
+
             ReportTaskApi.current.getUserList(function (res) {
               // console.log(res);
               if (res.code == 200) {
@@ -536,13 +542,6 @@
           project_id: row.project_id
         });
 
-        // ReportTaskApi.current.editTask( function(res) {
-        //   if (res.code == 200) {
-        //     self.$message({type: "success", message: res.msg});
-        //   }
-        // },{
-        //   project_id: row.project_id
-        // });
       },
 
       handleRowClickDelete: function (row) {
@@ -608,22 +607,28 @@
           tempSheet.schedule = "";
         }
 
-        // tempSheet.script = encodeURIComponent(tempSheet.script);
+        // tempSheet.script = encodeURIComponent(JSON.stringify(JSON.parse(tempSheet.script)));
         tempSheet.script = JSON.stringify(JSON.parse(tempSheet.script));
+        /*
+        console.log("初始script------------------------");
         console.log(tempSheet.script);
-        console.log("--------------------");
+
+        // tempSheet.script = encodeURI(tempSheet.script);
+        console.log("encodeURI后的script------------------------");
         console.log(encodeURI(tempSheet.script) );
-
-        console.log("parse--------------------");
-        console.log(JSON.stringify(JSON.parse(tempSheet.script))  );
-
-        console.log("encodeURI--------------------");
-        console.log(encodeURI(tempSheet.script)  );
-
-        tempSheet.script = encodeURI(tempSheet.script);
+      
         // tempSheet.script = encodeURIComponent(tempSheet.script);
+        console.log("encodeURIComponent后的script------------------------");
+        console.log(encodeURIComponent(tempSheet.script));
 
 
+        console.log("decodeURIComponent后的script------------------------");
+        console.log(decodeURIComponent(encodeURIComponent(tempSheet.script)));
+
+          // console.log("parse--------------------");
+        // console.log(JSON.stringify(JSON.parse(tempSheet.script))  );
+
+      */
         let formdata = new FormData();
         formdata.append("template", this.addTmpFile);
         formdata.append("project_name", tempSheet.project_name);
@@ -676,6 +681,7 @@
 
         this.addUserList = [];
         this.addCustomerList = [];
+        this.addTmpFile = "";
       },
 
 
@@ -697,7 +703,14 @@
 
 
       handleEditViewOpen() {
+        let self = this;
+
         this.resetEditViewRelativeData();
+        this.$nextTick( () => {
+          console.log("edit view open nexttick");
+          self.$refs.ref_editTplFile.uploadFiles = [];
+          self.editTmpFile = "";
+        });
       },
 
       handleEditUserChange(value) {
@@ -720,13 +733,12 @@
       },
 
       handleClickSaveEdit() {
+
         let self = this;
         let tempSheet = JSON.parse(JSON.stringify(this.editSheetObj));
         if(tempSheet.type == 1) {
           tempSheet.schedule = "";
         }
-
-
 
         let formdata = new FormData();
         formdata.append("template", this.editTmpFile);
@@ -755,6 +767,7 @@
       resetEditViewRelativeData() {
         this.editUserList = [];
         this.editCustomerList = [];
+        this.editTmpFile = "";
       },
 
 
@@ -762,8 +775,12 @@
         console.log(file);
       },
 
+      handleEditTplFileBeforeUpload(file, fileList) {
+        console.log("edit ----- beforeupload");
+        // this.editTmpFile = "";
+      },
+
       handleEditTplFileUpload(file, fileList) {
-        // this.$refs["ref_addTplFile"].uploadFiles = [];
         this.editTmpFile = file.file;
       },
 
@@ -806,5 +823,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/sass/pages/StaProject/StaProject.scss";
+  @import "@/assets/sass/pages/ReportTask/ReportTask.scss";
 </style>

@@ -30,7 +30,7 @@ export function fetch(url, type, params, token) {
             axios.get(url, {
                     params: params,
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         'Authorization': 'Bearer ' + token,
                     }
                 })
@@ -48,7 +48,7 @@ export function fetch(url, type, params, token) {
         } else if (type == 'upload' || type == 'UPLOAD') {
             axios.post(url, params, {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         'Authorization': 'Bearer ' + token,
                     }
                 })
@@ -78,7 +78,7 @@ export function fetch(url, type, params, token) {
 
             axios.post(url, param, {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         'Authorization': 'Bearer ' + token,
                     }
                 })
