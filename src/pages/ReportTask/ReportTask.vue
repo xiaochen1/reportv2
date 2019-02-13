@@ -251,7 +251,7 @@
                   @change="handleAddTplChange">
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                    <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                    <div class="el-upload__tip" slot="tip">只能上传excel文件</div>
                   </el-upload>
 
                 </div>
@@ -337,6 +337,15 @@
               </div>
             </div>
 
+            <div class="list-item">
+              <div class="item item-row">
+                <div class="name">脚本</div>
+                <div class="value">
+                  <el-input type="textarea" v-model="editSheetObj.script"></el-input>
+                </div>
+              </div>
+            </div>
+
 
             <div class="list-item">
               <div class="item item-row">
@@ -360,14 +369,7 @@
               </div>
             </div>
 
-            <div class="list-item">
-              <div class="item item-row">
-                <div class="name">脚本</div>
-                <div class="value">
-                  <el-input type="textarea" v-model="editSheetObj.script"></el-input>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -397,13 +399,13 @@
         addSheetObj: {},
         addUserList: [],
         addCustomerList: [],
-        addTmpFile: "",
+        addTplFile: "",
 
         editSheetObj: {},
         editUserList: [],
         editCustomerList: [],
         editTplFileList: [],
-        editTmpFile: "",
+        editTplFile: "",
 
 
         searchCondition: {
@@ -630,7 +632,7 @@
 
       */
         let formdata = new FormData();
-        formdata.append("template", this.addTmpFile);
+        formdata.append("template", this.addTplFile);
         formdata.append("project_name", tempSheet.project_name);
         formdata.append("user_id", tempSheet.user_id);
         formdata.append("customer_id", tempSheet.customer_id);
@@ -668,6 +670,7 @@
       },
 
       resetAddViewRelativeData() {
+        let self = this;
         this.addSheetObj = {
           project_name: "",
           user_id: "",
@@ -681,7 +684,11 @@
 
         this.addUserList = [];
         this.addCustomerList = [];
-        this.addTmpFile = "";
+        this.addTplFile = "";
+
+        this.$nextTick( () => {
+          self.$refs.ref_addTplFile.uploadFiles = [];
+        });
       },
 
 
@@ -690,8 +697,7 @@
       },
 
       handleAddTplFileUpload(file, fileList) {
-        // this.$refs["ref_addTplFile"].uploadFiles = [];
-        this.addTmpFile = file.file;
+        this.addTplFile = file.file;
       },
 
 
@@ -706,11 +712,7 @@
         let self = this;
 
         this.resetEditViewRelativeData();
-        this.$nextTick( () => {
-          console.log("edit view open nexttick");
-          self.$refs.ref_editTplFile.uploadFiles = [];
-          self.editTmpFile = "";
-        });
+        
       },
 
       handleEditUserChange(value) {
@@ -741,7 +743,7 @@
         }
 
         let formdata = new FormData();
-        formdata.append("template", this.editTmpFile);
+        formdata.append("template", this.editTplFile);
         formdata.append("project_id", tempSheet.project_id);
         formdata.append("project_name", tempSheet.project_name);
         formdata.append("user_id", tempSheet.user_id);
@@ -767,7 +769,12 @@
       resetEditViewRelativeData() {
         this.editUserList = [];
         this.editCustomerList = [];
-        this.editTmpFile = "";
+        this.editTplFile = "";
+
+        this.$nextTick( () => {
+          console.log("edit view open nexttick");
+          self.$refs.ref_editTplFile.uploadFiles = [];
+        });
       },
 
 
@@ -777,11 +784,11 @@
 
       handleEditTplFileBeforeUpload(file, fileList) {
         console.log("edit ----- beforeupload");
-        // this.editTmpFile = "";
+        // this.editTplFile = "";
       },
 
       handleEditTplFileUpload(file, fileList) {
-        this.editTmpFile = file.file;
+        this.editTplFile = file.file;
       },
 
 
