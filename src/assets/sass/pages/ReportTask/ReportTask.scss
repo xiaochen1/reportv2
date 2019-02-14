@@ -188,7 +188,7 @@
                         height: 0;
                         visibility: hidden;
                     }
-                    .item {
+                    .report-item {
                         float: left;
                         width: 45%;
                         margin-right: 5%;
@@ -211,6 +211,56 @@
                     .item-row {
                         width: 100%;
                         margin: 0;
+                    }
+                }
+                .list-item.schedule {
+                    .schedule-comp {
+                        .cron-result {
+                            margin: 20px 0;
+                            .result-item {
+                                float: left;
+                                margin-right: 20px;
+                                .title {
+                                    float: left;
+                                    margin-right: 5px;
+                                }
+                                .content {
+                                    float: left;
+                                    width: 80px;
+                                }
+                            }
+                            &:after {
+                                display: block;
+                                content: "";
+                                clear: both;
+                                height: 0;
+                                visibility: hidden;
+                            }
+                        }
+                        .cron {
+                            width: 100%;
+                            min-width: 300px;
+                            .card-box {
+                                .item {
+                                    margin-bottom: 10px;
+                                    .el-input {
+                                        width: 100px;
+                                    }
+                                    .el-checkbox-group {
+                                        .el-checkbox {
+                                            margin: 0;
+                                            margin-right: 20px;
+                                            height: 30px;
+                                            line-height: 30px;
+                                            width: 50px;
+                                        }
+                                    }
+                                    .many {
+                                        margin-left: 20px;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
